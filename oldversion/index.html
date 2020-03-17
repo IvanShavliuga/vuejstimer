@@ -1,0 +1,29 @@
+<html>
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+</head>
+<body
+  <section class="home">
+    <div id="home" class="app" >
+      <logo><span>My</span>task.com</logo>
+      <h1>Наш сервис контроля вашего времени</h6>
+      <p>Вы можете добавить любую задачу на сегодняшний день и дождаться сигнала. </p>
+      <p id="timer">{{time.hour}} : {{time.minute}} : {{time.second}}</p>
+      <div class="add" >
+        время: 
+      <input type="number" class="add__time" v-model="task.hour">:
+      <input type="number" class="add__time" v-model="task.minute">:
+      <input type="number" class="add__time" v-model="task.second">
+        Заголовок:
+      <input type="text" v-model="task.title"><br><br>
+        Сообщение:
+        <input type="text" v-model="task.message">
+                                       </div>
+      <button v-on:click="add()">Добавить</button>
+      <task v-for="(t,k) in tasks" v-bind:time="t.hour+':'+t.minute+':'+t.second" v-bind:status="t.status" v-bind:message="t.message" v-bind:title="t.title" :key="k" ></task>
+        </div>
+        </div>
+    </div>
+  </section>
+</body>
