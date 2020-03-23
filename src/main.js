@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import App from './App.vue';
-/*
+
 Vue.component("task", {
     props:["time", "id", "title", "message","status"], 
     template:`<div class="task">
@@ -32,36 +32,31 @@ Vue.component("task", {
                 return "прошлое";
            } 
         } 
- }, 
-  computed:{
-      timer() {
-           setTimeout(()=>{current.now()},1000);
-       } 
-   } 
- });*/
+ }
+ });
 let v = new Vue({el:".app", 
-                render: h => h(App)/*,
-                 data:{
-                   tasks:[{
-                     hour:current.hour,
-                     minute:current.minute+1,
-                     second:current.second,
-                     title:"test", 
-                     message:"This is test"} ],
-                   task:{
-                     hour:0,
-                     minute:0,
-                     second:0,
-                     message:"",
-                     title:"",
-                     status:""
-                   }, 
-                   time:current
-                  }, 
-                 methods:{
-                    add() {
-                      this.tasks.push(this.task);                      
-                     }                                                      
-                  }*/
+    render: h => h(App)/*,
+    data:{
+        tasks:[{
+            hour:current.hour,
+            minute:current.minute+1,
+            second:current.second,
+            title:"test", 
+            message:"This is test"} ],
+            task:{
+                hour:0,
+                minute:0,
+                second:0,
+                message:"",
+                title:"",
+                status:""
+             }, 
+             time:0
+      }, 
+      methods:{
+          add() {
+             this.tasks.push(this.task);                      
+          }                                                      
+      }*/
                 
 });

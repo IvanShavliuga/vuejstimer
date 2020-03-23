@@ -5,7 +5,7 @@
       <p>Вы можете добавить любую задачу на сегодняшний день и дождаться сигнала. </p>
       <p id="timer">{{time.hour}} : {{time.minute}} : {{time.second}}</p>
         время: 
-      <!--<div class="add" >
+     <div class="add" >
       <input type="number" class="add__time" v-model="task.hour">:
       <input type="number" class="add__time" v-model="task.minute">:
       <input type="number" class="add__time" v-model="task.second">
@@ -14,9 +14,8 @@
         Сообщение:
         <input type="text" v-model="task.message">
                                        </div>
-      <button v-on:click="add()">Добавить</button>-->
-     <!-- <task v-for="(t,k) in tasks" v-bind:time="t.hour+':'+t.minute+':'+t.second" v-bind:status="t.status" v-bind:message="t.message" v-bind:title="t.title" :key="k" ></task>-->
-</div>
+      <button v-on:click="add()">Добавить</button>
+     <app-task v-for="(t,k) in tasks" :task="t" :key="k" :current="time"></app-task></div>
   
 </template>
 <style lang="scss">
@@ -135,7 +134,7 @@ button{
 }
 </style>
 <script>
-
+import Task from './Task.vue';
 export default {
      data() {
         return {
@@ -143,8 +142,21 @@ export default {
               hour:0,
               minute:0,
               second:0
-            }       
-        
+            },
+            tasks:[{
+               hour:0,
+               minute:0,
+               second:0,
+               title:"test", 
+               message:"This is test"} ],
+            task:{
+               hour:0,
+               minute:0,
+               second:0,
+               message:"",
+               title:"",
+               status:""
+            }
         }       
      },
      methods:{
@@ -154,18 +166,24 @@ export default {
            this.time.minute=d.getMinutes();
            this.time.second=d.getSeconds();
            setTimeout(()=>{this.now()},1000);
-        }
+        },
+        add() {
+           this.tasks.push(this.task);                     
+        } 
      },
       created:function(){ 
         
         setTimeout(()=>{this.now()},1000);
-        /*if(this.time.minute<59){
+        if(this.time.minute<59){
              this.tasks[0].hour=this.time.hour;
-             his.tasks[0].minute=this.time.minute+2;
+             this.tasks[0].minute=this.time.minute+2;
         }else{
-             his.tasks[0].hour=(this.tasks[0].hour>23)?(0):(this.tasks[0].hour);
+             this.tasks[0].hour=(this.tasks[0].hour>23)?(0):(this.tasks[0].hour);
              this.time.minute=0;
-        }*/
+        }
+    },
+    components: {
+        appTask:Task    
     }   
 
 }
