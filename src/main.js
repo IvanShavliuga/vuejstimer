@@ -1,30 +1,6 @@
-let current = {
-    hour:0,
-    minute:0,
-    second:0, 
-    now(){
-        let d=new Date();
-       
-        this.hour=d.getHours();
-        this.minute=d.getMinutes();
-        this.second=d.getSeconds();
-        /*$("#timer").text(this.hour+":" +this.minute+":"+this.second);
-      */
-     } 
- } ;
-$(document).ready(function() {
-  /* setInterval(()=>{
- let dt=new Date();
-    
-current.hour=dt.getHours();
-current.minute=dt.getMinutes();
-current.second=dt.getSeconds(); 
-$("#timer").text(current.hour+":"+current.minute+":"+current.second); 
-   }, 1000);*/
-  current.now();
-  setInterval(function() {current.now();}, 1000);
-  
- });
+import Vue from 'vue';
+import App from './App.vue';
+/*
 Vue.component("task", {
     props:["time", "id", "title", "message","status"], 
     template:`<div class="task">
@@ -56,21 +32,22 @@ Vue.component("task", {
                 return "прошлое";
            } 
         } 
- }/*, 
+ }, 
   computed:{
       timer() {
            setTimeout(()=>{current.now()},1000);
        } 
-   } */
- });
+   } 
+ });*/
 let v = new Vue({el:".app", 
+                render: h => h(App)/*,
                  data:{
                    tasks:[{
                      hour:current.hour,
-        minute:current.minute+1,
-        second:current.second,
-        title:"test", 
-        message:"This is test"} ],
+                     minute:current.minute+1,
+                     second:current.second,
+                     title:"test", 
+                     message:"This is test"} ],
                    task:{
                      hour:0,
                      minute:0,
@@ -85,15 +62,6 @@ let v = new Vue({el:".app",
                     add() {
                       this.tasks.push(this.task);                      
                      }                                                      
-                  },
-  created:function(){ 
-        current.now();
-        if(current.minute<59){
-        this.tasks[0].hour=current.hour;
-        this.tasks[0].minute=current.minute+2;
-          }else{
-            this.tasks[0].hour=(this.tasks[0].hour>23)?(0):(this.tasks[0].hour);
-            this.minute=0;
-            }
-     }   
+                  }*/
+                
 });
