@@ -12,9 +12,10 @@
       <input type="text" v-model="task.message">
      </div>
       <button v-on:click="add()">Добавить</button>
-      
-      <app-task v-for="(t,k) in tasks" :task="t" :key="k" :current="time"></app-task></div>
-    
+      <table class="tasks__list">
+      <app-task v-for="(t,k) in tasks" :task="t" :key="k" :current="time"></app-task>
+      </table>
+  </div>  
 </template>
 <style lang="scss">
 
@@ -87,32 +88,33 @@ button{
         width:20px;
       }
  } 
-
+.tasks__list{
+   width:80%;
+   margin: 30px auto 0 auto;
+   
+   border-collapse:collapse;
 .task{
-    background-color:rgba(255,0,255,0.3);
-    border:1px dotted #0cf;
-    margin:10px;
-    padding:1px;
-    width:700px;
+    td{
+        border-bottom: 1px solid black;
+    }
     &__title{
-       background-color:#05c;
-        color:gold;
-        border-bottom:1px dotted #0cf;
+        padding:10px;
+        color:black;
+        font-weight: bold;
       }
     &__message{
+       padding:10px;
        text-align:justify;
-       color:#0cf;
-       min-height:50px;
+       color:black;
+   
       }
    &__status{
-       background-color:#900;
-       border-top:1px dotted #0cf;
-       display:flex;
+      padding:10px;
       .task__active{
-          padding-left:40px;
-          color:#0ff;
+          color:black;
         }
      }
+}
 }
 }
 </style>
