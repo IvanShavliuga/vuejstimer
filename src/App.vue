@@ -155,7 +155,7 @@ export default {
         } 
      },
       created:function(){ 
-        
+        this.now();
         setTimeout(()=>{this.now()},1000);
         if(this.time.minute<59){
              this.tasks[0].hour=this.time.hour;

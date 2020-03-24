@@ -31,10 +31,10 @@ export default {
             let tt=this.task.hour*60*60+this.task.minute*60+this.task.second;              
               let d=this.current.hour*60*60+this.current.minute*60+this.current.second;
             let def=tt-d;           
-              if(def > 0) return "будущее";
-              else if(def===0) return "сейчас";
+              if(def > 0) return "будущее "+this.current.hour+":"+this.current.minute+":"+this.current.second;
+              else if(def===0) return "сейчас "+this.current.hour+":"+this.current.minute+":"+this.current.second;
             else
-                return "прошлое";
+                return "прошлое "+this.current.hour+":"+this.current.minute+":"+this.current.second;
            } 
        
       } 
