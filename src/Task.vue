@@ -1,18 +1,18 @@
 <template>
-<div class="task">
-       <h2 class="task__title"> {{task.title}}</h2>
-       <div class="task__message">
+<tr class="task">
+       <td class="task__title"> {{task.title}}</td>
+       <td class="task__message">
        {{task.message}}
-       </div>
-       <div class="task__status">
-       <div class="task__time">
+       </td>
+       <td class="task__status">
+       <span class="task__time">
        {{task.hour+':'+task.minute+':'+task.second}}
-       </div>
-       <div class="task__active">
+       </span>
+       <span class="task__active">
           {{active()}}
-       </div>
-       </div>
-</div>
+       </span>
+       </td>
+</tr>
 </template>
 <script>
 export default {
@@ -31,10 +31,10 @@ export default {
             let tt=this.task.hour*60*60+this.task.minute*60+this.task.second;              
               let d=this.current.hour*60*60+this.current.minute*60+this.current.second;
             let def=tt-d;           
-              if(def > 0) return "будущее";
-              else if(def===0) return "сейчас";
+              if(def > 0) return "будущее "+this.current.hour+":"+this.current.minute+":"+this.current.second;
+              else if(def===0) return "сейчас "+this.current.hour+":"+this.current.minute+":"+this.current.second;
             else
-                return "прошлое";
+                return "прошлое "+this.current.hour+":"+this.current.minute+":"+this.current.second;
            } 
        
       } 
