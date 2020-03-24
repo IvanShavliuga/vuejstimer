@@ -3,20 +3,18 @@
 <div class="logo"><span>My</span>task.com</div>
       <h1>Наш сервис контроля вашего времени</h1>
       <p>Вы можете добавить любую задачу на сегодняшний день и дождаться сигнала. </p>
-      <p id="timer">{{time.hour}} : {{time.minute}} : {{time.second}}</p>
-        время: 
+      <p id="timer">{{time.hour}}:{{time.minute}}:{{time.second}}</p>
      <div class="add" >
-      <input type="number" class="add__time" v-model="task.hour">:
-      <input type="number" class="add__time" v-model="task.minute">:
-      <input type="number" class="add__time" v-model="task.second">
-        Заголовок:
-      <input type="text" v-model="task.title"><br><br>
-        Сообщение:
-        <input type="text" v-model="task.message">
-                                       </div>
+      <input type="text" class="add__time" v-model="task.hour"><span>:</span>
+      <input type="text" class="add__time" v-model="task.minute"><span>:</span>
+      <input type="text" class="add__time" v-model="task.second">
+      <input type="text" v-model="task.title">
+      <input type="text" v-model="task.message">
+     </div>
       <button v-on:click="add()">Добавить</button>
-     <app-task v-for="(t,k) in tasks" :task="t" :key="k" :current="time"></app-task></div>
-  
+      
+      <app-task v-for="(t,k) in tasks" :task="t" :key="k" :current="time"></app-task></div>
+    
 </template>
 <style lang="scss">
 
@@ -25,55 +23,33 @@
   padding:0;
   }
 body {
-   background: #000;
+   background: #ccc;
+   font-family: "Georgia"
 }
-header{
-  padding:10px;
-  display:flex;
-  background-color:rgba(66,66,66,0.8);
-  color:rgb(255,0, 0);
-  ul{
-    list-style:none;
-    display:inline-block;
-    margin-left:200px;
-    li{
-      padding: 10px 20px;
-      display:inline-block;
-      border-left:1px solid  #fff;
-      }
-    }
-  .logo{
-    font-size:1.2em;
-    display:inline-block;
-    padding:10px 20px;
-    color:rgb(255,0, 0);
-    span{
-        color:rgb(255,0, 0);
-      }
-   } 
-} 
+
 #home{
  text-align:center;    
- background:#000;
-  width:100%;
+ background:#dedede;
+  width:60%;
   height:100%;
   padding:auto;
+  margin: 0 auto;
   color: rgb(255,0, 0);
-  div {
-  logo{
-    font-size:1.2em;
+ 
+  .logo{
+    font-size:1.5em;
     display:inline-block;
     padding:10px 20px;
-    color:rgb(255,0, 0);
+    color:rgb(0,200, 200);
     span{
-       color:rgb(255,0, 0);
+       color:rgb(200,200, 0);
       }
    } 
-   }
-  }
-h1{
-   font-size:1.3em;
-   color:#dd0;
+   
+
+h1,p{
+   font-size:1.1em;
+   color:#000;
    
  } 
 button{
@@ -85,52 +61,59 @@ button{
     border:1px solid red;
  } 
 #timer{
-     color:rgb(255,0, 0);
+     color:rgb(255,80, 190);
+     transform: scaleY(1.8);
      font-size:2.5em;
      margin:20px 20px;
   }
 .add{
-    margin:40px auto;
-    font-size:2vmax;
+    margin:40px auto;   
+    width:450px;
     color:red;
+    border-bottom:1px solid red;
+    padding:5px;
     input{
-        Background-color:transparent;
+        background-color:transparent;
         border:none;
-       color:red;
-      border-bottom:1px solid red;
+        color:red;
+        margin: 0;
+        width: 180px;
+        font-size:20px;
      } 
+    span {
+        font-size:16px;   
+    } 
     .add__time{
         width:20px;
       }
  } 
+
 .task{
     background-color:rgba(255,0,255,0.3);
     border:1px dotted #0cf;
     margin:10px;
     padding:1px;
-    .task__title{
+    width:700px;
+    &__title{
        background-color:#05c;
         color:gold;
         border-bottom:1px dotted #0cf;
       }
-    .task__message{
+    &__message{
        text-align:justify;
        color:#0cf;
-       min-height:100px;
+       min-height:50px;
       }
-   .task__status{
+   &__status{
        background-color:#900;
        border-top:1px dotted #0cf;
        display:flex;
       .task__active{
           padding-left:40px;
-          input{
-              Background-color:transparent;
-              border:none;
-              color:#0ff;
-           } 
+          color:#0ff;
         }
      }
+}
 }
 </style>
 <script>
@@ -153,8 +136,8 @@ export default {
                hour:0,
                minute:0,
                second:0,
-               message:"",
-               title:"",
+               message:"Сообщение",
+               title:"Заголовок",
                status:""
             }
         }       
