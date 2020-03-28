@@ -5,14 +5,14 @@
       <p>Вы можете добавить любую задачу на сегодняшний день и дождаться сигнала. </p>
       <p id="timer">{{time.hour}}:{{time.minute}}:{{time.second}}</p>
      <div class="add" >
-      <input type="text" class="add__time" v-model="task.hour"><span>:</span>
-      <input type="text" class="add__time" v-model="task.minute"><span>:</span>
-      <input type="text" class="add__time" v-model="task.second">
-      <input type="text" v-model="task.title">
-      <input type="text" v-model="task.message">
+      <input type="text" title="hour" class="add__time" v-model="task.hour"><span>:</span>
+      <input type="text" title="minute" class="add__time" v-model="task.minute"><span>:</span>
+      <input type="text" title="second" class="add__time" v-model="task.second">
+      <input type="text" title="title" v-model="task.title">
+      <input type="text" title="message" v-model="task.message">
      </div>
-      <button v-on:click="add()">Добавить</button>
-      <button v-on:click="curr()">Текущее время</button>
+      <button v-on:click="add()" title="add task" >Добавить</button>
+      <button v-on:click="curr()" title="add current time" >Текущее время</button>
       <table class="tasks__list">
       <app-task v-for="(t,k) in tasks" :task="t" :key="k" :current="time"></app-task>
       </table>

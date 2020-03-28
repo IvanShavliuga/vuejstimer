@@ -1,14 +1,14 @@
 <template>
 <tr class="task">
-       <td class="task__title">#{{task.id+1}}  {{task.title}}</td>
-       <td class="task__message">
+       <td class="task__title" title="title" >#{{task.id+1}}  {{task.title}}</td>
+       <td class="task__message" title="message" >
        {{task.message}}
        </td>
        <td class="task__status">
-       <span class="task__time">
+       <span class="task__time" title="time" >
        {{task.hour+':'+task.minute+':'+task.second}}
        </span>
-       <span :class="'task__active '+active()">
+       <span :class="'task__active '+active()" title="status " >
           {{active()}}
        </span>
        </td>
