@@ -12,6 +12,7 @@
       <input type="text" v-model="task.message">
      </div>
       <button v-on:click="add()">Добавить</button>
+      <button v-on:click="curr()">Текущее время</button>
       <table class="tasks__list">
       <app-task v-for="(t,k) in tasks" :task="t" :key="k" :current="time"></app-task>
       </table>
@@ -68,8 +69,8 @@ button{
      margin:20px 20px;
   }
 .add{
-    margin:40px auto;   
-    width:450px;
+    margin:20px auto;   
+    width:460px;
     color:red;
     border-bottom:1px solid red;
     padding:5px;
@@ -85,7 +86,7 @@ button{
         font-size:16px;   
     } 
     .add__time{
-        width:20px;
+        width:22px;
       }
  } 
 .tasks__list{
@@ -129,6 +130,7 @@ export default {
               second:0
             },
             tasks:[{
+               id:0,
                hour:0,
                minute:0,
                second:0,
@@ -153,7 +155,21 @@ export default {
            setTimeout(()=>{this.now()},1000);
         },
         add() {
-           this.tasks.push(this.task);                     
+           let t= {
+             id: this.tasks.length,
+             hour: this.task.hour,
+             minute: this.task.minute,
+             second: this.task.second,
+             message: this.task.message,
+             title: this.task.title            
+           };
+           this.tasks.push(t);                     
+        },
+        curr() {
+           let d=new Date();
+           this.task.hour=d.getHours();
+           this.task.minute=d.getMinutes();
+           this.task.second=d.getSeconds();
         } 
      },
       created:function(){ 
@@ -161,7 +177,7 @@ export default {
         setTimeout(()=>{this.now()},1000);
         if(this.time.minute<59){
              this.tasks[0].hour=this.time.hour;
-             this.tasks[0].minute=this.time.minute+2;
+             this.tasks[0].minute=this.time.minute+1;
         }else{
              this.tasks[0].hour=(this.tasks[0].hour>23)?(0):(this.tasks[0].hour);
              this.time.minute=0;
