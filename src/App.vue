@@ -14,8 +14,10 @@
       <button v-on:click="add()" title="add task" >Добавить ctrl+Enter</button>
       <button v-on:click="curr()" title="add current time" >Текущее время Enter</button>
       <table class="tasks__list">
-      <app-task v-for="(t,k) in tasks" :task="t" :key="k" :current="time"></app-task>
+      <p>Pages: {{displaypages()}}</p>
+      <app-task v-for="(t,k) in tasksfilter(pagination.position)" :task="t" :key="k" :current="time"></app-task>
       </table>
+      <button v-if="pagination.length" @click="pagination.position+=5">Next</button>
   </div>  
 </template>
 <style lang="scss">
@@ -92,8 +94,7 @@ button{
  } 
 .tasks__list{
    width:80%;
-   margin: 30px auto 0 auto;
-   
+   margin: 30px auto;  
    border-collapse:collapse;
 .task{
     td{
@@ -252,6 +253,10 @@ export default {
                message:"Сообщение",
                title:"Заголовок",
                status:""
+            },
+            pagination: {
+               length:0,
+               position:0            
             }
         }       
      },
@@ -272,7 +277,8 @@ export default {
              message: this.task.message,
              title: this.task.title            
            };
-           this.tasks.push(t);                     
+           this.tasks.push(t);
+           this.pagination.length=this.tasks.length/5                     
         },
         curr() {
            let d=new Date();
@@ -286,18 +292,53 @@ export default {
            else if(e.keyCode === 13 ) 
                this.curr();     
                
+        },
+        tasksfilter(idstart) {
+           if(this.tasks.length<6) 
+              return this.tasks;
+           else {
+              let tarr = [];
+              let ls = this.tasks.length-idstart;
+              let len = ( ls< 6 )?(ls):(idstart+5);
+              for(let i=idstart; i<len; i++)
+                  tarr.push(this.tasks[i]);
+              return tarr;         
+           }
+              
+        },
+        displaypages() {
+           return Math.floor(this.pagination.length);        
         }             
      },
       created:function(){ 
         this.now();
+        
         setTimeout(()=>{this.now()},1000);
-        if(this.time.minute<59){
-             this.tasks[0].hour=this.time.hour;
-             this.tasks[0].minute=this.time.minute+1;
-        }else{
-             this.tasks[0].hour=(this.tasks[0].hour>23)?(0):(this.tasks[0].hour);
-             this.time.minute=0;
+        
+        for(let i=0; i<15; i++){
+          let t={
+            id:0,
+            hour:0,
+            minute:0,
+            second:0,
+            message:'',
+            title:''            
+          };
+          if((this.time.minute+i)<59){
+             t.hour=this.time.hour;
+             t.minute=this.time.minute+i;
+          }else{
+             t.hour=/*(this.tasks[0].hour>23)?(0):(this.tasks[0].hour)*/+21;
+             t.minute=i;
+          }
+          t.second = 0;
+          t.message = "Test timer systems "+t.minute;
+          t.title = "timer";
+          t.id=i;
+          this.tasks.push(t);
         }
+        this.pagination.length=this.tasks.length/5;
+        this.pagination.position=0;
     },
     components: {
         appTask:Task    
