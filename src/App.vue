@@ -81,7 +81,8 @@ button{
         margin: 0;
         width: 180px;
         font-size:20px;
-     } 
+     }
+    
     span {
         font-size:16px;   
     } 
@@ -118,7 +119,7 @@ button{
 }
 }
 }
-@media screen and (max-width: 500px) {
+@media screen and  (min-width: 300px) and (max-width: 501px){
  div#home{
    width:100%;
    h1,p {
@@ -137,11 +138,14 @@ button{
          }
        input {
          
-         font-size:0.9em!important; 
+         font-size:0.8em!important; 
          width:calc(90%/3)!important;    
        }   
-       
+      
    }
+    button {
+          font-size:0.7em!important; 
+    } 
  }
  .tasks__list{
     width:90%!important; 
@@ -150,7 +154,48 @@ button{
     }
  }
 }
-@media screen and (max-width: 800px) {
+@media screen and  (max-height: 388px){
+   div#home {
+      height: 388px;  
+   }
+
+}
+@media screen and  (max-width: 299px){
+ div#home{
+   width:100%;
+   h1,p {
+       font-size:0.9em!important;   
+   
+   }
+   #timer {
+       font-size:1.7em!important;   
+   }
+   div.add {
+       margin:15px 0;
+       padding:0;
+       width:100%;
+       .add__time {
+             width:15px!important;         
+         }
+       input {
+         
+         font-size:0.8em!important; 
+         width:calc(90%/3)!important;    
+       }   
+      
+   }
+    button {
+          font-size:0.7em!important; 
+    } 
+ }
+ .tasks__list{
+    width:100%!important; 
+    .task {
+        font-size:0.7em;    
+    }
+ }
+}
+@media screen and (max-width: 800px) and (min-width: 501px){
  div#home{
    width:100%;
    h1,p {
@@ -178,7 +223,7 @@ button{
  .tasks__list{
     width:90%!important; 
     .task {
-        font-size:0.7em;    
+        font-size:1.1em;    
     }
  }
 }
