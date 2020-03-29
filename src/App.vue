@@ -5,14 +5,14 @@
       <p>Вы можете добавить любую задачу на сегодняшний день и дождаться сигнала. </p>
       <p id="timer">{{time.hour}}:{{time.minute}}:{{time.second}}</p>
      <div class="add" >
-      <input type="text" title="hour" class="add__time" v-model="task.hour"><span class="separator">:</span>
-      <input type="text" title="minute" class="add__time" v-model="task.minute"><span class="separator">:</span>
-      <input type="text" title="second" class="add__time" v-model="task.second">
-      <input type="text" title="title" v-model="task.title">
-      <input type="text" title="message" v-model="task.message">
+      <input type="text" @keyup="onKeyup" title="hour" class="add__time" v-model="task.hour"><span class="separator">:</span>
+      <input type="text" @keyup="onKeyup" title="minute" class="add__time" v-model="task.minute"><span class="separator">:</span>
+      <input type="text" @keyup="onKeyup" title="second" class="add__time" v-model="task.second">
+      <input type="text" @keyup="onKeyup" title="title" v-model="task.title">
+      <input type="text" @keyup="onKeyup" title="message" v-model="task.message">
      </div>
-      <button v-on:click="add()" title="add task" >Добавить</button>
-      <button v-on:click="curr()" title="add current time" >Текущее время</button>
+      <button v-on:click="add()" title="add task" >Добавить ctrl+Enter</button>
+      <button v-on:click="curr()" title="add current time" >Текущее время Enter</button>
       <table class="tasks__list">
       <app-task v-for="(t,k) in tasks" :task="t" :key="k" :current="time"></app-task>
       </table>
@@ -57,8 +57,8 @@ h1,p{
 button{
     background-color:transparent;
     border-radius:20px;
-    height:30px;
     width:100px;
+    height:40px;
     color:red;
     border:1px solid red;
  } 
@@ -163,7 +163,7 @@ button{
    div.add {
        margin:15px auto;
        padding:0;
-       width:90%;
+       width:80%;
        .add__time {
              width:15px!important;         
          }
@@ -234,7 +234,14 @@ export default {
            this.task.hour=d.getHours();
            this.task.minute=d.getMinutes();
            this.task.second=d.getSeconds();
-        } 
+        },
+        onKeyup(e) {
+           if(e.ctrlKey && e.keyCode === 13)             
+               this.add();
+           else if(e.keyCode === 13 ) 
+               this.curr();     
+               
+        }             
      },
       created:function(){ 
         this.now();
