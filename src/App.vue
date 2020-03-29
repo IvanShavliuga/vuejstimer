@@ -5,8 +5,8 @@
       <p>Вы можете добавить любую задачу на сегодняшний день и дождаться сигнала. </p>
       <p id="timer">{{time.hour}}:{{time.minute}}:{{time.second}}</p>
      <div class="add" >
-      <input type="text" title="hour" class="add__time" v-model="task.hour"><span>:</span>
-      <input type="text" title="minute" class="add__time" v-model="task.minute"><span>:</span>
+      <input type="text" title="hour" class="add__time" v-model="task.hour"><span class="separator">:</span>
+      <input type="text" title="minute" class="add__time" v-model="task.minute"><span class="separator">:</span>
       <input type="text" title="second" class="add__time" v-model="task.second">
       <input type="text" title="title" v-model="task.title">
       <input type="text" title="message" v-model="task.message">
@@ -117,6 +117,70 @@ button{
      }
 }
 }
+}
+@media screen and (max-width: 500px) {
+ div#home{
+   width:100%;
+   h1,p {
+       font-size:0.9em!important;   
+   
+   }
+   #timer {
+       font-size:1.7em!important;   
+   }
+   div.add {
+       margin:15px auto;
+       padding:0;
+       width:90%;
+       .add__time {
+             width:15px!important;         
+         }
+       input {
+         
+         font-size:0.9em!important; 
+         width:calc(90%/3)!important;    
+       }   
+       
+   }
+ }
+ .tasks__list{
+    width:90%!important; 
+    .task {
+        font-size:0.7em;    
+    }
+ }
+}
+@media screen and (max-width: 800px) {
+ div#home{
+   width:100%;
+   h1,p {
+       font-size:0.9em!important;   
+   
+   }
+   #timer {
+       font-size:1.7em!important;   
+   }
+   div.add {
+       margin:15px auto;
+       padding:0;
+       width:90%;
+       .add__time {
+             width:15px!important;         
+         }
+       input {
+         
+         font-size:0.9em!important; 
+         width:calc(90%/3)!important;    
+       }   
+       
+   }
+ }
+ .tasks__list{
+    width:90%!important; 
+    .task {
+        font-size:0.7em;    
+    }
+ }
 }
 </style>
 <script>
