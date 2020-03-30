@@ -11,13 +11,20 @@
       <input type="text" @keyup="onKeyup" title="title" v-model="task.title">
       <input type="text" @keyup="onKeyup" title="message" v-model="task.message">
      </div>
-      <button v-on:click="add()" title="add task" >Добавить ctrl+Enter</button>
-      <button v-on:click="curr()" title="add current time" >Текущее время Enter</button>
+      <button v-on:click="add()" title="add task" role="button">Добавить ctrl+Enter</button>
+      <button v-on:click="curr()" title="add current time" role="button">Текущее время Enter</button>
       <table class="tasks__list">
-      <p>Pages: {{displaypages()}}</p>
+      <caption> Task {{pagination.position+1}} of Tasks {{pagination.length}}</caption>
       <app-task v-for="(t,k) in tasksfilter(pagination.position)" :task="t" :key="k" :current="time"></app-task>
+      <tbody v-if="empty!=[]&&pagination.position>=(pagination.length-5)">
+      <tr v-for="(e,k) in empty" :key="k"><td>&nbsp;{{e}}</td></tr>
+      </tbody>
       </table>
-      <button v-if="pagination.length" @click="pagination.position+=5">Next</button>
+      <button v-if="pagination.position<pagination.length&&pagination.position>0" @click="pagination.position-=5" role="button">Prev</button>
+      <button v-if="pagination.position<(pagination.length-5)" @click="pagination.position+=5" role="button">Next</button>
+      <div class="footer">
+        &copy; 30.03.2020 Ivan Shavliuga (Ivanov), Belarus, Novopolotsk. License MIT 
+      </div>
   </div>  
 </template>
 <style lang="scss">
@@ -35,7 +42,6 @@ body {
  text-align:center;    
  background:#dedede;
   width:60%;
-  height:100%;
   padding:auto;
   margin: 0 auto;
   color: rgb(255,0, 0);
@@ -49,7 +55,11 @@ body {
        color:rgb(200,200, 0);
       }
    } 
-   
+   .footer {
+      color:black;
+      margin-top:50px;
+      padding:20px;   
+   }
 
 h1,p{
    font-size:1.1em;
@@ -94,11 +104,27 @@ button{
  } 
 .tasks__list{
    width:80%;
+   height:300px;
+   vertical-align:top;
    margin: 30px auto;  
    border-collapse:collapse;
+   caption {
+      font-size:20px;
+      font-weight:bold;   
+   }
+   tbody{
+      td {
+          height:60px;      
+      }   
+   }
 .task{
+    tr {
+        height:60px;
+    }
     td{
         border-bottom: 1px solid black;
+        vertical-align:bottom;
+        height:60px;
     }
     &__title{
         padding:10px;
@@ -120,7 +146,8 @@ button{
 }
 }
 }
-@media screen and  (min-width: 300px) and (max-width: 501px){
+
+@media screen and  (min-width: 300px) and (max-width: 489px){
  div#home{
    width:100%;
    h1,p {
@@ -150,17 +177,13 @@ button{
  }
  .tasks__list{
     width:90%!important; 
+    
     .task {
         font-size:0.7em;    
     }
  }
 }
-@media screen and  (max-height: 388px){
-   div#home {
-      height: 388px;  
-   }
 
-}
 @media screen and  (max-width: 299px){
  div#home{
    width:100%;
@@ -199,6 +222,7 @@ button{
 @media screen and (max-width: 800px) and (min-width: 501px){
  div#home{
    width:100%;
+  
    h1,p {
        font-size:0.9em!important;   
    
@@ -239,13 +263,8 @@ export default {
               minute:0,
               second:0
             },
-            tasks:[{
-               id:0,
-               hour:0,
-               minute:0,
-               second:0,
-               title:"test", 
-               message:"This is test"} ],
+            tasks:[ ],
+            empty:[],
             task:{
                hour:0,
                minute:0,
@@ -278,7 +297,7 @@ export default {
              title: this.task.title            
            };
            this.tasks.push(t);
-           this.pagination.length=this.tasks.length/5                     
+           this.pagination.length=this.tasks.length;                     
         },
         curr() {
            let d=new Date();
@@ -294,20 +313,32 @@ export default {
                
         },
         tasksfilter(idstart) {
-           if(this.tasks.length<6) 
+           if(this.tasks.length<6){
+              let len=this.tasks.length;
+              this.empty = []              
+              for(let j=0; j<len; j++)
+                 this.empty.push(j);
               return this.tasks;
-           else {
+           }else {
               let tarr = [];
               let ls = this.tasks.length-idstart;
-              let len = ( ls< 6 )?(ls):(idstart+5);
-              for(let i=idstart; i<len; i++)
-                  tarr.push(this.tasks[i]);
+              if(ls < 6){
+                  for(let i=0; i<ls; i++)
+                      tarr.push(this.tasks[i+idstart]);
+                  this.empty = [];           
+                  for(let j=0; j<5-ls; j++)
+                     this.empty.push(j);
+              }else{
+                  for(let i=idstart; i<idstart+5; i++)
+                      tarr.push(this.tasks[i]);
+              
+              }
               return tarr;         
            }
               
         },
         displaypages() {
-           return Math.floor(this.pagination.length);        
+           return Math.floor(this.pagination.length/5);        
         }             
      },
       created:function(){ 
@@ -337,7 +368,7 @@ export default {
           t.id=i;
           this.tasks.push(t);
         }
-        this.pagination.length=this.tasks.length/5;
+        this.pagination.length=this.tasks.length;
         this.pagination.position=0;
     },
     components: {
