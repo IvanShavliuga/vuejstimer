@@ -1,12 +1,14 @@
 <template>
-<div id="home" >
+<div id="home">
 <div class="logo"><span>My</span>task.com</div>
       <h1>Наш сервис контроля вашего времени</h1>
       <p>Вы можете добавить любую задачу на сегодняшний день и дождаться сигнала. </p>
       <p id="timer">{{time.hour}}:{{time.minute}}:{{time.second}}</p>
      <div class="add" >
-      <input type="text" @keyup="onKeyup" title="hour" class="add__time" v-model="task.hour"><span class="separator">:</span>
-      <input type="text" @keyup="onKeyup" title="minute" class="add__time" v-model="task.minute"><span class="separator">:</span>
+      <input type="text" @keyup="onKeyup" title="hour" class="add__time" v-model="task.hour">
+          <span class="separator">:</span>
+      <input type="text" @keyup="onKeyup" title="minute" class="add__time" v-model="task.minute">
+          <span class="separator">:</span>
       <input type="text" @keyup="onKeyup" title="second" class="add__time" v-model="task.second">
       <input type="text" @keyup="onKeyup" title="title" v-model="task.title">
       <input type="text" @keyup="onKeyup" title="message" v-model="task.message">
@@ -14,16 +16,25 @@
       <button v-on:click="add()" title="add task" role="button">Добавить ctrl+Enter</button>
       <button v-on:click="curr()" title="add current time" role="button">Текущее время Enter</button>
       <table class="tasks__list">
-      <caption> Task {{pagination.position+1}} of Tasks {{pagination.length}}</caption>
-      <app-task v-for="(t,k) in tasksfilter(pagination.position)" :task="t" :key="k" :current="time"></app-task>
-      <tbody v-if="empty!=[]&&pagination.position>=(pagination.length-5)">
-      <tr v-for="(e,k) in empty" :key="k"><td>&nbsp;{{e}}</td></tr>
-      </tbody>
+         <caption> Task {{pagination.position+1}} of Tasks {{pagination.length}}</caption>
+         <app-task v-for="(t,k) in tasksfilter(pagination.position)" :task="t" :key="k" :current="time"></app-task>
+         <tbody v-if="empty!=[]&&pagination.position>=(pagination.length-5)">
+             <tr v-for="(e,k) in empty" :key="k"><td>&nbsp;</td></tr>
+         </tbody>
       </table>
-      <button v-if="pagination.position<pagination.length&&pagination.position>0" @click="pagination.position-=5" role="button">Prev</button>
-      <button v-if="pagination.position<(pagination.length-5)" @click="pagination.position+=5" role="button">Next</button>
+      <button v-if="pagination.position<pagination.length&&pagination.position>0" 
+             @click="pagination.position-=5" 
+             role="button">
+             Prev
+      </button>
+      <button v-if="pagination.position<(pagination.length-5)" 
+              @click="pagination.position+=5" 
+              role="button">
+              Next
+      </button>
       <div class="footer">
-        &copy; 30.03.2020 Ivan Shavliuga (Ivanov), Belarus, Novopolotsk. License MIT 
+        &copy; 30.03.2020 <a href="https://github.com/IvanShavliuga">Ivan Shavliuga (Ivanov)</a>, Belarus, Novopolotsk. License 
+        <a href="https://github.com/IvanShavliuga/vuejstimer/blob/master/LICENSE">MIT</a> 
       </div>
   </div>  
 </template>
@@ -145,14 +156,19 @@ button{
      }
 }
 }
+.footer a {
+    color:#ff33ff;
+    font-weight:bold;
+    text-decoration:underline;
+    
+}
 }
 
 @media screen and  (min-width: 300px) and (max-width: 489px){
  div#home{
    width:100%;
    h1,p {
-       font-size:0.9em!important;   
-   
+       font-size:0.9em!important;      
    }
    #timer {
        font-size:1.7em!important;   
@@ -164,15 +180,14 @@ button{
        .add__time {
              width:15px!important;         
          }
-       input {
-         
+       input {        
          font-size:0.8em!important; 
          width:calc(90%/3)!important;    
        }   
       
    }
     button {
-          font-size:0.7em!important; 
+       font-size:0.7em!important; 
     } 
  }
  .tasks__list{
@@ -322,13 +337,16 @@ export default {
            }else {
               let tarr = [];
               let ls = this.tasks.length-idstart;
-              if(ls < 6){
+              
+              if(ls < 5){
+                  
                   for(let i=0; i<ls; i++)
                       tarr.push(this.tasks[i+idstart]);
                   this.empty = [];           
                   for(let j=0; j<5-ls; j++)
                      this.empty.push(j);
               }else{
+                  
                   for(let i=idstart; i<idstart+5; i++)
                       tarr.push(this.tasks[i]);
               
