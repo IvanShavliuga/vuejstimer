@@ -16,9 +16,17 @@
       <button v-on:click="add()" title="add task" role="button">Добавить ctrl+Enter</button>
       <button v-on:click="curr()" title="add current time" role="button">Текущее время Enter</button>
       <table class="tasks__list">
-         <caption> Task {{pagination.position+1}} of Tasks {{pagination.length}}</caption>
+         <caption> Task 
+             <span title="position">{{pagination.position+1}}</span>
+              of Tasks 
+              <span title="length">{{pagination.length}}</span>
+         </caption>
+         <tbody v-if="pagination.position === tasks.length-1">
+            <app-task  :task="tasks[pagination.position]" :current="time"></app-task>
+            <tr v-for="(e,k) in [1,2,3,4]" :key="k"><td>&nbsp;</td></tr>
+         </tbody>
+         <tbody v-else>
          <app-task v-for="(t,k) in tasksfilter(pagination.position)" :task="t" :key="k" :current="time"></app-task>
-         <tbody v-if="empty!=[]&&pagination.position>=(pagination.length-5)">
              <tr v-for="(e,k) in empty" :key="k"><td>&nbsp;</td></tr>
          </tbody>
       </table>
@@ -46,7 +54,13 @@
   }
 body {
    background: #ccc;
-   font-family: "Georgia"
+   font-family: "Georgia";
+}
+button {
+   outline: none;
+}
+button:active {
+   outline: 2px solid gray;
 }
 
 #home{
@@ -102,7 +116,7 @@ button{
         border:none;
         color:red;
         margin: 0;
-        width: 180px;
+        width: 160px;
         font-size:20px;
      }
     
@@ -121,14 +135,17 @@ button{
    border-collapse:collapse;
    caption {
       font-size:20px;
-      font-weight:bold;   
+      font-weight:bold; 
+      span {
+          color: #ed56ed;      
+      }  
    }
    tbody{
       td {
           height:60px;      
       }   
    }
-.task{
+ .task{
     tr {
         height:60px;
     }
@@ -286,7 +303,8 @@ export default {
                second:0,
                message:"Сообщение",
                title:"Заголовок",
-               status:""
+               status:"",
+               id:0
             },
             pagination: {
                length:0,
@@ -335,23 +353,29 @@ export default {
                  this.empty.push(j);
               return this.tasks;
            }else {
-              let tarr = [];
-              let ls = this.tasks.length-idstart;
               
-              if(ls < 5){
-                  
+              let ls = this.tasks.length-idstart;
+              if(ls == 1){
+                  this.empty = [];           
+                  for(let j=0; j<4; j++)
+                     this.empty.push("ls == 1 "+j+" len "+this.tasks.length+" elem: "+this.tasks[this.tasks.length - 1].title);                  
+                  return this.tasks[this.tasks.length - 1];
+              }
+              else if(ls < 5 && ls > 1){
+                  let tarr = [];
                   for(let i=0; i<ls; i++)
                       tarr.push(this.tasks[i+idstart]);
                   this.empty = [];           
                   for(let j=0; j<5-ls; j++)
                      this.empty.push(j);
+                  return tarr; 
               }else{
-                  
+                  let tarr = [];
                   for(let i=idstart; i<idstart+5; i++)
                       tarr.push(this.tasks[i]);
-              
+                  return tarr; 
               }
-              return tarr;         
+                      
            }
               
         },
@@ -380,9 +404,9 @@ export default {
              t.hour=/*(this.tasks[0].hour>23)?(0):(this.tasks[0].hour)*/+21;
              t.minute=i;
           }
-          t.second = 0;
+          t.second = i*3;
           t.message = "Test timer systems "+t.minute;
-          t.title = "timer";
+          t.title = "timer ("+Math.floor(Math.random()*1000)+")";
           t.id=i;
           this.tasks.push(t);
         }
