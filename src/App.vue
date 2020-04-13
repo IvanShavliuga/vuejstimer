@@ -15,28 +15,32 @@
      </div>
       <button v-on:click="add()" title="add task" role="button">Добавить ctrl+Enter</button>
       <button v-on:click="curr()" title="add current time" role="button">Текущее время Enter</button>
+      <button v-on:click="clear()" title="Clear tasks list" role="button">Очистить список</button>
       <table class="tasks__list">
          <caption> Task 
              <span title="position">{{pagination.position+1}}</span>
               of Tasks 
               <span title="length">{{pagination.length}}</span>
-         </caption>
-         <tbody v-if="pagination.position === tasks.length-1">
-            <app-task  :task="tasks[pagination.position]" :current="time"></app-task>
-            <tr v-for="(e,k) in [1,2,3,4]" :key="k"><td>&nbsp;</td></tr>
+        </caption>
+         <tbody v-if="tasks.length===0">
+            <tr><td>Tasks is not found</td></tr>
          </tbody>
-         <tbody v-else>
-         <app-task v-for="(t,k) in tasksfilter(pagination.position)" :task="t" :key="k" :current="time"></app-task>
-             <tr v-for="(e,k) in empty" :key="k"><td>&nbsp;</td></tr>
+         <tbody>
+         <tr><td>{{elements}}</td></tr>
+         <tr><td>{{empty}}</td></tr>
+         <app-task v-for="(t,k) in elfilter()" :key="k" :task="tasks[t]" :current="time"></app-task>
+         </tbody>
+         <tbody v-if="empty.length">
+           <tr v-for="(e,k) in empty" :key="k"><td></td></tr>
          </tbody>
       </table>
       <button v-if="pagination.position<pagination.length&&pagination.position>0" 
-             @click="pagination.position-=5" 
+             @click="prev()" 
              role="button">
              Prev
       </button>
       <button v-if="pagination.position<(pagination.length-5)" 
-              @click="pagination.position+=5" 
+              @click="next()" 
               role="button">
               Next
       </button>
@@ -99,6 +103,9 @@ button{
     color:red;
     border:1px solid red;
  } 
+button:focus{
+    background-color:rgba(230,67,230,0.2);
+}
 #timer{
      color:rgb(255,80, 190);
      transform: scaleY(1.8);
@@ -237,8 +244,7 @@ button{
          
          font-size:0.8em!important; 
          width:calc(90%/3)!important;    
-       }   
-      
+       }        
    }
     button {
           font-size:0.7em!important; 
@@ -295,8 +301,12 @@ export default {
               minute:0,
               second:0
             },
+            st:0,
+           
             tasks:[ ],
             empty:[],
+            elements:[0,1,2,3,4],
+            restore:[0,0,0,0,0],
             task:{
                hour:0,
                minute:0,
@@ -330,7 +340,16 @@ export default {
              title: this.task.title            
            };
            this.tasks.push(t);
-           this.pagination.length=this.tasks.length;                     
+           this.pagination.length=this.tasks.length;
+           let offset=this.tasks.length-this.pagination.position; 
+           if(this.tasks.length<=5) {
+             this.elements[this.tasks.length-1]=t.id; 
+             this.empty.length--;            
+           }  
+           else if(offset<=5&&offset>0) {
+             this.elements[offset-1]=t.id; 
+             this.empty.length--;            
+           }                   
         },
         curr() {
            let d=new Date();
@@ -345,6 +364,44 @@ export default {
                this.curr();     
                
         },
+        elfilter() {
+           return this.elements.filter((i)=>{return i!==-1});
+        },
+        next() {
+           this.pagination.position+=5;
+           let offset = this.tasks.length - this.pagination.position;
+           this.st = offset;
+           this.empty=[];
+           if(offset >= 5)
+              for(let i=0; i<5; i++)
+                this.elements[i]+=5;
+           else{
+              //this.elements=[];
+              for(let i=0; i<offset; i++)
+                 this.elements[offset-i-1]=this.tasks.length-i-1;
+              for(let j=0; j<5-offset; j++){
+                 this.empty.push(j);
+                 this.elements[j+offset]=-1;
+              }
+           }     
+           
+        },
+        prev() {
+              this.st=this.pagination.position
+           let offset = this.tasks.length - this.pagination.position;
+           if(offset<5) { 
+              //this.elements=[0,0,0,0,0]; 
+              this.empty=[];
+              for(let i=0; i<5; i++) {
+                  this.elements[4-i]=-(offset-this.tasks.length)-i-1;
+              }
+           }
+           else if(this.pagination.position<this.pagination.length&&this.pagination.position>0)
+              for(let i=0; i<5; i++) {
+                 this.elements[i]-=5;
+              }
+           this.pagination.position-=5;
+        },
         tasksfilter(idstart) {
            if(this.tasks.length<6){
               let len=this.tasks.length;
@@ -353,7 +410,6 @@ export default {
                  this.empty.push(j);
               return this.tasks;
            }else {
-              
               let ls = this.tasks.length-idstart;
               if(ls == 1){
                   this.empty = [];           
@@ -362,18 +418,13 @@ export default {
                   return this.tasks[this.tasks.length - 1];
               }
               else if(ls < 5 && ls > 1){
-                  let tarr = [];
-                  for(let i=0; i<ls; i++)
-                      tarr.push(this.tasks[i+idstart]);
                   this.empty = [];           
                   for(let j=0; j<5-ls; j++)
                      this.empty.push(j);
-                  return tarr; 
+                  return this.tasks.slice(-ls);
               }else{
-                  let tarr = [];
-                  for(let i=idstart; i<idstart+5; i++)
-                      tarr.push(this.tasks[i]);
-                  return tarr; 
+                  this.empty = []; 
+                  return this.tasks.slice(idstart,idstart+5); 
               }
                       
            }
@@ -381,6 +432,13 @@ export default {
         },
         displaypages() {
            return Math.floor(this.pagination.length/5);        
+        },
+        clear() {
+            this.tasks=[];
+            this.elements=[-1,-1,-1,-1,-1];
+            this.empty=[0,1,2,3,4];
+            this.pagination.length=0;
+            this.pagination.position=0;         
         }             
      },
       created:function(){ 
