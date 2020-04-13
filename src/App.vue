@@ -3,7 +3,9 @@
 <div class="logo"><span>My</span>task.com</div>
       <h1>Наш сервис контроля вашего времени</h1>
       <p>Вы можете добавить любую задачу на сегодняшний день и дождаться сигнала. </p>
-      <p id="timer">{{time.hour}}:{{time.minute}}:{{time.second}}</p>
+      <p id="timer">{{displaydigit(time.hour)}}
+      <span>:</span>{{displaydigit(time.minute)}}
+      <span>:</span>{{displaydigit(time.second)}}</p>
      <div class="add" >
       <input type="text" @keyup="onKeyup" title="hour" class="add__time" v-model="task.hour">
           <span class="separator">:</span>
@@ -13,9 +15,11 @@
       <input type="text" @keyup="onKeyup" title="title" v-model="task.title">
       <input type="text" @keyup="onKeyup" title="message" v-model="task.message">
      </div>
+      <div class="add__buttons">
       <button v-on:click="add()" title="add task" role="button">Добавить ctrl+Enter</button>
       <button v-on:click="curr()" title="add current time" role="button">Текущее время Enter</button>
       <button v-on:click="clear()" title="Clear tasks list" role="button">Очистить список</button>
+      </div>
       <table class="tasks__list">
          <caption> Task 
              <span title="position">{{pagination.position+1}}</span>
@@ -43,86 +47,97 @@
               Next
       </button>
       <div class="footer">
-        &copy; 30.03.2020 <a href="https://github.com/IvanShavliuga">Ivan Shavliuga (Ivanov)</a>, Belarus, Novopolotsk. License 
+        &copy; 13.04.2020 <a href="https://github.com/IvanShavliuga">Ivan Shavliuga (Ivanov)</a>, Belarus, Novopolotsk. License 
         <a href="https://github.com/IvanShavliuga/vuejstimer/blob/master/LICENSE">MIT</a> 
       </div>
   </div>  
 </template>
 <style lang="scss">
-
+@import "./themegray.scss";
 *{
   margin:0;
   padding:0;
   }
 body {
-   background: #ccc;
-   font-family: "Georgia";
+   background: $background-body;
+   font-family: $font-body;
 }
 button {
    outline: none;
 }
 button:active {
-   outline: 2px solid gray;
+   outline: $button-outline;
 }
 
 #home{
  text-align:center;    
- background:#dedede;
+ background:$background-container;
   width:60%;
   padding:auto;
   margin: 0 auto;
-  color: rgb(255,0, 0);
+  color: $text-container;
  
   .logo{
     font-size:1.5em;
     display:inline-block;
     padding:10px 20px;
-    color:rgb(0,200, 200);
+    color:$logo-color;
     span{
-       color:rgb(200,200, 0);
+       color:$logo-color-span;
       }
    } 
    .footer {
-      color:black;
+      color:$text-nodes;
       margin-top:50px;
       padding:20px;   
    }
 
 h1,p{
    font-size:1.1em;
-   color:#000;
+   color:$text-nodes;
    
- } 
+ }  
 button{
     background-color:transparent;
     border-radius:20px;
     width:100px;
     height:40px;
-    color:red;
-    border:1px solid red;
+    color:$button-color;
+    margin-left:15px;
+    border:1px solid $button-color;
  } 
 button:focus{
-    background-color:rgba(230,67,230,0.2);
+    background-color:$button-focus;
+}
+.add__buttons {
+    display:flex;
+    justify-content:center;
 }
 #timer{
      color:rgb(255,80, 190);
      transform: scaleY(1.8);
      font-size:2.5em;
+     font-family:$timer-font;
      margin:20px 20px;
+     span {
+        margin-left:5px;
+        margin-right:5px;     
+     }
   }
 .add{
     margin:20px auto;   
     width:460px;
     color:red;
-    border-bottom:1px solid red;
     padding:5px;
+    border-bottom:1px solid red;
     input{
         background-color:transparent;
+        font-family:$task-font;
         border:none;
         color:red;
         margin: 0;
         width: 160px;
-        font-size:20px;
+        font-size:23px;
      }
     
     span {
@@ -142,7 +157,7 @@ button:focus{
       font-size:20px;
       font-weight:bold; 
       span {
-          color: #ed56ed;      
+          color: $link-color;      
       }  
    }
    tbody{
@@ -158,6 +173,7 @@ button:focus{
         border-bottom: 1px solid black;
         vertical-align:bottom;
         height:60px;
+        font-family:$task-font;
     }
     &__title{
         padding:10px;
@@ -179,7 +195,7 @@ button:focus{
 }
 }
 .footer a {
-    color:#ff33ff;
+    color:$link-color;
     font-weight:bold;
     text-decoration:underline;
     
@@ -210,6 +226,7 @@ button:focus{
    }
     button {
        font-size:0.7em!important; 
+       margin-left: 15px;
     } 
  }
  .tasks__list{
@@ -255,7 +272,7 @@ button:focus{
     }
  }
 }
-@media screen and (max-width: 800px) and (min-width: 501px){
+@media screen and (max-width: 800px) and (min-width: 485px){
  div#home{
    width:100%;
   
@@ -430,6 +447,11 @@ export default {
         },
         displaypages() {
            return Math.floor(this.pagination.length/5);        
+        },
+        displaydigit(t) {
+           let dt1 = Math.floor(t/10);
+           let dt2 = t%10;
+           return dt1+""+dt2;          
         },
         clear() {
             this.tasks=[];
