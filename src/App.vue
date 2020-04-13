@@ -26,8 +26,6 @@
             <tr><td>Tasks is not found</td></tr>
          </tbody>
          <tbody>
-         <tr><td>{{elements}}</td></tr>
-         <tr><td>{{empty}}</td></tr>
          <app-task v-for="(t,k) in elfilter()" :key="k" :task="tasks[t]" :current="time"></app-task>
          </tbody>
          <tbody v-if="empty.length">
