@@ -1,0 +1,118 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  background: #e1e1e1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.clock {
+  background: #222;
+  width: 40vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 3vw;
+  border-radius: 1vw;
+  box-shadow: 0 2vw 4vw -1vw black;
+}
+
+svg {
+  width: 100%;
+  -webkit-transform: skewX(-5deg);
+          transform: skewX(-5deg);
+}
+
+.t, .tl, .tr, .m, .bl, .br, .b {
+  fill: #333;
+}
+
+#separator {
+  fill: gold;
+  -webkit-animation: blink 2s linear infinite;
+          animation: blink 2s linear infinite;
+}
+
+@-webkit-keyframes blink {
+  0% {
+    fill: gold;
+  }
+  50% {
+    fill: gold;
+  }
+  51% {
+    fill: #333;
+  }
+  100% {
+    fill: #333;
+  }
+}
+
+@keyframes blink {
+  0% {
+    fill: gold;
+  }
+  50% {
+    fill: gold;
+  }
+  51% {
+    fill: #333;
+  }
+  100% {
+    fill: #333;
+  }
+}
+.time-0 .t, .time-0 .tl, .time-0 .tr, .time-0 .bl, .time-0 .br, .time-0 .b {
+  fill: gold;
+}
+
+.time-1 .tr, .time-1 .br {
+  fill: gold;
+}
+
+.time-2 .t, .time-2 .tr, .time-2 .m, .time-2 .bl, .time-2 .b {
+  fill: gold;
+}
+
+.time-3 .t, .time-3 .tr, .time-3 .m, .time-3 .br, .time-3 .b {
+  fill: gold;
+}
+
+.time-4 .tl, .time-4 .tr, .time-4 .m, .time-4 .br {
+  fill: gold;
+}
+
+.time-5 .t, .time-5 .tl, .time-5 .m, .time-5 .br, .time-5 .b {
+  fill: gold;
+}
+
+.time-6 .t, .time-6 .tl, .time-6 .m, .time-6 .bl, .time-6 .br, .time-6 .b {
+  fill: gold;
+}
+
+.time-7 .t, .time-7 .tr, .time-7 .br {
+  fill: gold;
+}
+
+.time-8 .t, .time-8 .tl, .time-8 .tr, .time-8 .m, .time-8 .bl, .time-8 .br, .time-8 .b {
+  fill: gold;
+}
+
+.time-9 .t, .time-9 .tl, .time-9 .tr, .time-9 .m, .time-9 .br, .time-9 .b {
+  fill: gold;
+}
