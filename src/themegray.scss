@@ -8,6 +8,62 @@ $text-container: #fd5621;
 $text-nodes: #000;
 $logo-color: #21acde;
 $logo-color-span: #acde21;
-$task-font: 'Lobster', cursive;
+$task-font: 'Georgia', cursive;
 $timer-font: 'Alfa Slab One', cursive;
 $link-color:#ff33ff;
+
+*{
+    margin:0;
+    padding:0;
+    }
+  body {
+     background: $background-body;
+     font-family: $font-body;
+  }
+  button {
+     outline: none;
+  }
+  button:active {
+     outline: $button-outline;
+  }
+  
+  #home{
+   text-align:center;    
+   background:$background-container;
+    width:60%;
+    padding:auto;
+    margin: 0 auto;
+    color: $text-container;
+   
+    .logo{
+      font-size:1.5em;
+      display:inline-block;
+      padding:10px 20px;
+      color:$logo-color;
+      span{
+         color:$logo-color-span;
+        }
+     } 
+     .footer {
+        color:$text-nodes;
+        margin-top:50px;
+        padding:20px;   
+     }
+    }
+  h1,p{
+     font-size:1.1em;
+     color:$text-nodes;
+     
+   }  
+  button{
+      background-color:transparent;
+      border-radius:20px;
+      width:100px;
+      height:40px;
+      color:$button-color;
+      margin-left:15px;
+      border:1px solid $button-color;
+   } 
+  button:focus{
+      background-color:$button-focus;
+  }
