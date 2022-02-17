@@ -19,9 +19,11 @@ export default {
             required: true
         }
     },
-    data: () => ({
-        empty: []
-    }),
+    computed: {
+      empty() {
+        return this.tasks.length >= 5 ? 0 : 5 - this.tasks.length 
+      }
+    }
 }
 </script>
 
