@@ -27,12 +27,6 @@ export default {
 
 <template>
   <table class="tasks__list">
-    <caption>
-      Task
-      <span title="position">{{ pagination.position + 1 }}</span>
-      of Tasks
-      <span title="length">{{ pagination.length }}</span>
-    </caption>
     <tbody v-if="tasks.length === 0">
       <tr>
         <td>Tasks is not found</td>
@@ -56,3 +50,30 @@ export default {
     </tbody>
   </table>
 </template>
+<style lang="scss">
+@import './themegray.scss';
+.tasks__list {
+  width: 80%;
+  height: 300px;
+  vertical-align: top;
+  margin: 30px auto;
+  border-collapse: collapse;
+  caption {
+    font-size: 20px;
+    font-weight: bold;
+    span {
+      color: $link-color;
+    }
+  }
+  tbody {
+    td {
+      height: 60px;
+    }
+  }
+}
+@media screen and (min-width: 300px) and (max-width: 489px) {
+ .tasks__list {
+    width: 90% !important;
+  }
+}
+</style>

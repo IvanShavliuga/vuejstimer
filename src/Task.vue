@@ -84,6 +84,9 @@ export default {
       color: black;
     }
   }
+  &__time {
+    color: #de54de;
+  }
 }
 .future {
   color: green !important;
@@ -96,6 +99,11 @@ export default {
 .present {
   color: red !important;
   margin-left: 5px;
+}
+@media screen and (min-width: 300px) and (max-width: 489px) {
+  .task {
+    font-size: 0.7em;
+  }
 }
 </style>
 
