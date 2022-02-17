@@ -60,7 +60,9 @@ export default {
       }
       t.id = this.tasks.length
       this.tasks.push(t)
-      this.pagination.length = ~~(this.tasks.length / 5)
+      this.pagination.length =  ~~(this.tasks.length / 5)
+      if (this.tasks.length % 5)
+        this.pagination.length++
     },
     now() {
       let d = new Date()
