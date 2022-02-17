@@ -1,3 +1,31 @@
+<script>
+export default {
+  props: {
+    task: {
+      type: Object,
+      required: true,
+    },
+    current: {
+      type: Object,
+      required: true,
+    },
+  },
+  methods: {
+    active() {
+      let tt =
+        this.task.hour * 60 * 60 + this.task.minute * 60 + this.task.second
+      let d =
+        this.current.hour * 60 * 60 +
+        this.current.minute * 60 +
+        this.current.second
+      let def = tt - d
+      if (def > 0) return 'future '
+      else if (def === 0) return 'now '
+      else return 'present '
+    },
+  },
+}
+</script>
 <template>
   <tr class="task">
     <td
@@ -70,31 +98,4 @@
   margin-left: 5px;
 }
 </style>
-<script>
-export default {
-  props: {
-    task: {
-      type: Object,
-      required: true,
-    },
-    current: {
-      type: Object,
-      required: true,
-    },
-  },
-  methods: {
-    active() {
-      let tt =
-        this.task.hour * 60 * 60 + this.task.minute * 60 + this.task.second
-      let d =
-        this.current.hour * 60 * 60 +
-        this.current.minute * 60 +
-        this.current.second
-      let def = tt - d
-      if (def > 0) return 'future '
-      else if (def === 0) return 'now '
-      else return 'present '
-    },
-  },
-}
-</script>
+
