@@ -26,10 +26,7 @@ module.exports = {
       },
     ],
     'vue/require-default-prop': 'off',
-    'vue/no-v-html': 'off',
-  },
-  globals: {
-    $nuxt: true,
+    'vue/no-v-html': 'off' // ,'vue/no-side-effects-in-computed-properties': 'off'
   },
   parserOptions: {
     parser: 'babel-eslint',
