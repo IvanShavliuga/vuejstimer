@@ -100,28 +100,30 @@ export default {
 </script>
 <template>
   <div id="home">
-    <div class="logo">
-      <span>My</span>task.com
-    </div>
-    <h1>Наш сервис контроля вашего времени</h1>
-    <p>
-      Вы можете добавить любую задачу на сегодняшний день и дождаться сигнала.
-    </p>
-    <app-timer :time="time" />
-    <app-add
-      @add="addClick"
-      @clear="clear"
-    />
-    <app-list
-      :pagination="pagination"
-      :tasks="tasksFilter"
-      :time="time"
-    />
-    <app-pages
-      :pagination="pagination"
-      @next="nextClick"
-      @prev="prevClick"
-    />
+    <section class="content">
+      <div class="logo">
+        <span>My</span>task.com
+      </div>
+      <h1>Наш сервис контроля вашего времени</h1>
+      <p>
+        Вы можете добавить любую задачу на сегодняшний день и дождаться сигнала.
+      </p>
+      <app-timer :time="time" />
+      <app-add
+        @add="addClick"
+        @clear="clear"
+      />
+      <app-list
+        :pagination="pagination"
+        :tasks="tasksFilter"
+        :time="time"
+      />
+      <app-pages
+        :pagination="pagination"
+        @next="nextClick"
+        @prev="prevClick"
+      />
+    </section>
     <div class="footer">
       &copy; 13.04.2020
       <a href="https://github.com/IvanShavliuga">Ivan Shavliuga (Ivanov)</a>,
@@ -134,9 +136,20 @@ export default {
 </template>
 <style lang="scss">
 @import './themegray.scss';
+
+#home {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: $background-container;
+  height: 100vh;
+  padding: 15px 0;
+}
+.content {
+  flex-grow: 1;
+}
 .footer {
-  position: fixed;
-  bottom: 15px;
+  height: 35px;
   a {
     color: $link-color;
     font-weight: bold;
@@ -238,5 +251,41 @@ export default {
     }
   }
 }
+
+/*===================================================================================*/
+/*=============== Откомментируй любой из способов приклейки футера ==================*/
+/*===================================================================================*/
+/*============ Способ 1 - абсолютное позиционирование =============*/
+/*body {
+    position: relative;
+    padding-bottom: 58px;
+    box-sizing: border-box;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    height: 58px;
+}*/
+/*============ Способ 2 - при помощи псевдоэлемента :after =============*/
+/*.content {
+    min-height: calc(100% - 58px);
+    margin-bottom: -58px;
+}
+.content:after {
+    content: '';
+    display: block;
+}
+.content:after, .footer {
+    height: 58px;
+}/*
+/*============ Способ 3 - Flexbox =============*/
+/* body {
+    display: flex;
+    flex-direction: column;
+}
+.content {
+    flex-grow: 1;
+} */
+
 </style>
 

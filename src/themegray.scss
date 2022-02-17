@@ -1,5 +1,5 @@
 $font-body:   "Georgia";
-$background-body:  #444;
+$background-body:  #222;
 $background-container:  #dedede;
 $button-outline: 2px solid gray;
 $button-focus: rgba(230,67,230,0.2);
@@ -19,12 +19,7 @@ body {
    background: $background-body;
    font-family: $font-body;
 }
-button {
-   outline: none;
-}
-button:active {
-   outline: $button-outline;
-}
+
 
 #home{
    text-align:center;    
@@ -56,12 +51,17 @@ h1,p{
 button{
    background-color:transparent;
    border-radius:20px;
-   width:100px;
+   width:120px;
    height:40px;
    color:$button-color;
    margin-left:15px;
+   padding: 5px 15px;
    border:1px solid $button-color;
+   outline: none;
 } 
 button:focus{
    background-color:$button-focus;
+}
+button:active {
+   outline: $button-outline;
 }
